@@ -13,41 +13,41 @@ datasource db {
  }
 
 model Product {
-  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String
-  slug        String @unique(map: "product_slug_idx")
+  slug        String     @unique(map: "product_slug_idx")
   category    String
   images      String[]
   brand       String
   description String
   stock       Int
-  price       Decimal @default(0) @db.Decimal(12,2)
-  rating      Decimal @default(0) @db.Decimal(3,2)
-  numReviews  Int     @default(0)
+  price       Decimal    @default(0) @db.Decimal(12,2)
+  rating      Decimal    @default(0) @db.Decimal(3,2)
+  numReviews  Int        @default(0)
   isFeatured  Boolean?
   banner      String?
-  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  createdAt   DateTime    @default(now()) @db.Timestamp(6)
 }
 
 model User {
-  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name          String    @default("NO_NAME")
-  email         String?   @unique(map:"user_email_idx")
-  emailVerified DateTime? @map("email_verified") @db.Timestamp(6)
+  id            String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String     @default("NO_NAME")
+  email         String     @unique(map:"user_email_idx")
+  emailVerified DateTime?  @map("email_verified") @db.Timestamp(6)
   image         String?
   password      String?
-  role          String    @default("user")
-  address       Json      @db.Json 
+  role          String     @default("user")
+  address       Json?      @db.Json 
   paymentMethod String?
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime   @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime   @updatedAt
   accounts      Account[]
   sessions      Session[]
   @@map("users")
 }
 
 model Account {
-  userId            String @db.Uuid
+  userId            String    @db.Uuid
   type              String
   provider          String
   providerAccountId String
@@ -59,21 +59,21 @@ model Account {
   id_token          String?
   session_state     String?
  
-  createdAt DateTime @default(now())   @db.Timestamp(6)
-  updatedAt DateTime @updatedAt
+  createdAt         DateTime   @default(now())   @db.Timestamp(6)
+  updatedAt         DateTime   @updatedAt
  
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@id([provider, providerAccountId])
 }
 model Session {
   sessionToken String   @id
-  userId       String  @db.Uuid
-  expires      DateTime   @db.Timestamp(6)
+  userId       String   @db.Uuid
+  expires      DateTime @db.Timestamp(6)
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model VerificationToken {

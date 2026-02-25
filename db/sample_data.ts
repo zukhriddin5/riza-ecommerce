@@ -1,5 +1,27 @@
 import {Prisma} from "@prisma/client"
-const sampleData  = {
+import {hashSync} from 'bcrypt-ts-edge';
+
+const sampleData = {
+  users: [
+    {
+      name: "Zuhriddin",
+      email: 'admin@zuhriddin.com',
+      password: hashSync('z1234', 10),
+      role: 'admin',
+      emailVerified: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      name: "Zuhriddin2",
+      email: 'admin@zuhriddinA.com',
+      password: hashSync('z1234', 10),
+      role: 'user',
+      emailVerified: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+        }
+  ],
     products:[
         {
             name: 'Polo Sporting Tshirt',

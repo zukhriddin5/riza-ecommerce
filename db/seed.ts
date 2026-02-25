@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import {Pool,neonConfig} from '@neondatabase/serverless';
-import {PrismaNeon} from '@prisma/adapter-neon';
-import ws from 'ws';
+import {Pool} from 'pg'
+//import {PrismaNeon} from '@prisma/adapter-neon';
+//import ws from 'ws';
 import sampleData from "./sample_data";
 
-neonConfig.webSocketConstructor=ws;
+//neonConfig.webSocketConstructor=ws;
 const connectionString= process.env.DATABASE_URL!;
 
 const pool = new Pool({connectionString});
@@ -16,16 +16,17 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-    console.log("Starting seed...");
-    console.log("Sample data:", sampleData.products.length, "products");
+    await prisma.product.deleteMany();
+    await prisma.account.deleteMany();
+    await prisma.session.deleteMany();
+    await prisma.verificationToken.deleteMany();
+    await prisma.user.deleteMany();
 
-    console.log("Deleting existing products...");
-    const deleted = await prisma.product.deleteMany();
-    console.log(`Deleted ${deleted.count} products`);
 
-    console.log("Creating new products...");
-    const created = await prisma.product.createMany({ data: sampleData.products });
-    console.log(`Created ${created.count} products`);
+   
+    await prisma.product.createMany({ data: sampleData.products });
+    await prisma.user.createMany({ data: sampleData.users });
+    
 
     console.log("Database seeded successfully!")
 }
