@@ -23,3 +23,14 @@ export const signInFormSchema = z.object({
     email:z.string().email('Invalid email adress'),
     password:z.string().min(6,'Password should be atleast 6 characters')
 })
+//schema for signing up the user 
+export const signUpFormSchema = z.object({
+    name:z.string().min(3,'Name should be atleast 3 character'),
+    email:z.string().email('Invalid email adress'),
+    password:z.string().min(6,'Password should be atleast 6 characters'),
+    confirmPassword:z.string().min(6,'Confirm password should be atleast 6 characters')
+})
+.refine((data) =>data.password ===data.confirmPassword,{
+    message:'Password does not same.Try again',
+    path:['confirmPassword']
+});
