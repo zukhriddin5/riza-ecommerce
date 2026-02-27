@@ -34,3 +34,23 @@ export const signUpFormSchema = z.object({
     message:'Password does not same.Try again',
     path:['confirmPassword']
 });
+
+//caart item schema
+export const cartItemSchema=z.object({
+    productId:z.string().min(1,'Product is required'),
+    name:z.string().min(1,'Name is required'),
+    slug:z.string().min(1,'Slug is required'),
+    quantity:z.number().nonnegative('Quantity should be positive number'),
+    image:z.string().min(1,'Image is required'),
+    price:currency,
+});
+
+export const insertCartSchema=z.object({
+    itemsz:z.array(cartItemSchema),
+    itemPrice:currency,
+    totalPrice:currency,
+    taxPrice:currency,
+    shippingPrice:currency,
+    sesionCartId:z.string().min(1,'Session Cart Id is required'),
+    userId:z.string().optional().nullable(),
+});
