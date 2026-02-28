@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from './lib/prisma';
-import CredentialsProvider from 'next-auth/providers/credentials'; // Fixed typo
+import CredentialsProvider from 'next-auth/providers/credentials'; 
 import { compareSync } from 'bcrypt-ts-edge';
 import type { NextAuthConfig } from 'next-auth';
 
@@ -82,7 +82,7 @@ const config = {
             }
             return token;
 
-        },
+        },   
     },
 } satisfies NextAuthConfig;
 

@@ -1,10 +1,17 @@
 import {z} from "zod";
-import { formatNumberWithDecimal } from "./utils";
+//import { formatNumberWithDecimal } from "./utils";
 
 
 //schema for inserting products
-const currency =z.string()
-    .refine((value)=>/^d+(\.\d{2}$)?/.test(formatNumberWithDecimal(Number(value))), 'Price must have exactly 2 decimal places')
+const currency = z.string().refine(
+  (value) => {
+    const num = parseFloat(value);
+    return !isNaN(num) && num >= 0;
+  },
+  'Price must be a valid positive number'
+).transform((value) => {
+  return parseFloat(value).toFixed(2); // Ensure 2 decimal places
+});
 export const insertProductSchema=z.object({
     name:z.string().min(3,"Name must be at least 3 characters"),
     slug:z.string().min(3,"Slug must be at least 3 characters"),

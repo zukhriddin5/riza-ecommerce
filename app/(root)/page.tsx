@@ -9,6 +9,7 @@ const Homepage = async () => {
     <div>
     <ProductList data={latestProduct} title="New Products"/>
     </div>
+    
   );
 };
 export default Homepage;
