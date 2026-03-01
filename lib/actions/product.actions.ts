@@ -25,15 +25,6 @@ export async function getFeaturedProducts() {
   });
   return products;
 }
-
-/*export async function getProductBySlug(slug: string) {
-  const product = await prisma.product.findUnique({
-    where: { slug }
-  });
-  return product;
-}*/
-
-// get the single product by its slug
 export async function getProductBySlug(slug:string){
   return prisma.product.findFirst({
     where: {slug:slug},
