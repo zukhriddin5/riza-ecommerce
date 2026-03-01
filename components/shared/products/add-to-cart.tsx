@@ -19,6 +19,7 @@ const AddToCart = ({ item }: { item: CartItem }) => {
 
         // Show success toast with action button
         toast.success(`${item.name} added to cart`, {
+            description:res.message,
             duration: 5000, // Show for 5 seconds
             action: {
                 label: 'Go to Cart',

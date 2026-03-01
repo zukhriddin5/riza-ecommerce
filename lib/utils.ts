@@ -62,3 +62,17 @@ export function formatError(error: any): string {
   // Fallback for unknown errors
   return 'An unexpected error occurred';
 }
+
+
+//round numbers for 2 decimal places
+export function round2(value:number | string){
+  if (typeof value === 'number'){
+    return Math.round((value+Number.EPSILON)*100)/100;
+
+  }else if(typeof value ==='string'){
+    return Math.round((Number(value)+Number.EPSILON)*100)/100;
+
+  }else{
+    throw new Error('Value is not number or string')
+  }
+}
