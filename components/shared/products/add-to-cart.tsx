@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { addItemCartToCart,removeItemFromCart } from "@/lib/actions/cart.actions";
 import { useTransition } from "react";
  
-const AddToCart = ({cart, item }: {cart:Cart, item: CartItem }) => {
+const AddToCart = ({cart, item }: {cart?:Cart, item: CartItem }) => {
     const router = useRouter();
     
     const [isPendingPlus,startTransitionPlus] =useTransition();
