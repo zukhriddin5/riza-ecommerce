@@ -31,7 +31,6 @@ const config = {
                         email: credentials.email as string
                     }
                 });
-
                 // If user exists and password matches
                 if (user && user.password) {
                     const isMatch = compareSync(credentials.password as string, user.password);
