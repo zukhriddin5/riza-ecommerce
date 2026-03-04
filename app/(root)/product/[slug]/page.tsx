@@ -4,13 +4,17 @@ import ProductPrice from "@/components/shared/products/product-price";
 import { getProductBySlug } from "@/lib/actions/product.actions";
 import { notFound } from "next/navigation";
 import ProductImages from "@/components/shared/products/product-images";
-import AddToCart from '@/components/shared/products/add-to-cart'
+import AddToCart from '@/components/shared/products/add-to-cart';
+import { getMyCart } from "@/lib/actions/cart.actions";
 
 
 const ProductDetailsPage = async (props:{params:Promise<{slug:string}>}) => {
     const {slug} = await props.params;
     const product = await getProductBySlug(slug);
     if(!product) notFound();
+
+    const cart = await getMyCart();
+
     return ( <>
     <section>
         <div className='grid grid-cols-1 md:grid-cols-5'>
@@ -50,7 +54,9 @@ const ProductDetailsPage = async (props:{params:Promise<{slug:string}>}) => {
                     </div>
                     {product.stock > 0 && (
                         <div className='flex-center'>
-                            <AddToCart item={{
+                            <AddToCart 
+                             cart={cart}
+                             item={{
                                 productId:product.id,
                                 name:product.name,
                                 slug:product.slug,
