@@ -76,3 +76,21 @@ export function round2(value:number | string){
     throw new Error('Value is not number or string')
   }
 }
+
+//currency formater
+const CURRENCY_FORMATER = new Intl.NumberFormat('en-US',{
+  currency:'USD',
+  style:'currency',
+  minimumFractionDigits: 2
+});
+
+export function formatCurrency(amount:number | string | null){
+  if (typeof amount === 'number'){
+    return CURRENCY_FORMATER.format(amount);
+  }else{
+    if (typeof amount === 'string'){
+      return CURRENCY_FORMATER.format(Number(amount));
+    }
+  }
+  throw new Error('Invalid currency format')
+}
