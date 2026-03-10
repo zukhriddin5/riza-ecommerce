@@ -13,3 +13,11 @@ export const signUpDefaultValues ={
     password: '',
     confirmPassword:''
 };
+
+export const shippingAddressDefaultValues ={
+    fullName:'',
+    streetAddress:'',
+    phoneNumber:'',
+    city:'',
+    country:'',
+};
