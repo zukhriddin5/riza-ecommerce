@@ -21,10 +21,10 @@ const ShippingAddressPage = async() => {
     if(!userId) throw new Error('User Id Not Found');
 
     const user = await getUserById(userId);
-    return ( <>
+    return (
     <ShippingAddressForm address={user.address as ShippingAddress}/>
     
-    </> );
+    );
 }
  
 export default ShippingAddressPage;
