@@ -1,5 +1,5 @@
 'use server';
-import { shippingAddressSchema, signInFormSchema, signUpFormSchema } from "../validators";
+import { shippingAddressSchema, signInFormSchema, signUpFormSchema,paymentMethodSchema } from "../validators";
 import { signIn, signOut, auth } from "@/auth";
 import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from '@/lib/prisma';
@@ -122,3 +122,28 @@ export async function getUserById(userId: string) {
     }
 
  }
+
+ //update user payment method
+export async function updateUserPaymentMethod(data: z.infer<typeof paymentMethodSchema>){
+    try {
+        const session =await auth();
+        const currentUser =await prisma.user.findFirst({
+            where:{id:session?.user?.id}    
+        });
+        if(!currentUser) redirect('/sign-in');
+
+        const paymentMethod = paymentMethodSchema.parse(data);
+
+        await prisma.user.update({
+            where:{id:currentUser.id},
+            data:{paymentMethod:paymentMethod.type},
+        });
+        return {
+            success:true,
+            message:'User Payment Method Updated Successfully',
+        };
+        
+    } catch (error) {
+        return {success:false, message:formatError(error)} 
+    }
+}
