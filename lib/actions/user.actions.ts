@@ -24,7 +24,7 @@ export async function signInWithCredentials(prevState: unknown, formData: FormDa
 
         return { success: true, message: 'Signed in successfully' };
 
-    } catch (error: any) {
+    } catch (error:any) {
         if (isRedirectError(error)) {
             throw error;
         }
